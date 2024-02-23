@@ -1,0 +1,2 @@
+# GoGoFoxer
+Simple game prototype
