@@ -1,10 +1,7 @@
-[gd_scene load_steps=13 format=3 uid="uid://ct46rxy86gnt3"]
+[gd_scene load_steps=12 format=3 uid="uid://ct46rxy86gnt3"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_82nso"]
 [ext_resource type="Texture2D" uid="uid://43svcrouwa77" path="res://assets/player/player.png" id="1_d0pig"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_wrq5f"]
-size = Vector2(23.2979, 21.1371)
 
 [sub_resource type="Animation" id="Animation_k77lg"]
 length = 0.001
@@ -104,23 +101,6 @@ tracks/0/keys = {
 "values": [0, 1, 2, 3]
 }
 
-[sub_resource type="Animation" id="Animation_717en"]
-resource_name = "sprint"
-length = 0.3
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 1,
-"values": [1, 3, 4]
-}
-
 [sub_resource type="Animation" id="Animation_oxtgr"]
 resource_name = "squat"
 length = 0.2
@@ -136,6 +116,23 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [9, 10]
+}
+
+[sub_resource type="Animation" id="Animation_717en"]
+resource_name = "sprint"
+length = 0.3
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [1, 3, 4]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ey5r7"]
@@ -154,17 +151,64 @@ _data = {
 script = ExtResource("1_82nso")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.954383, 0.954383)
 texture = ExtResource("1_d0pig")
 hframes = 19
 frame = 13
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0.271358, 7)
-scale = Vector2(0.452518, 0.774613)
-shape = SubResource("RectangleShape2D_wrq5f")
+[node name="CollisionIdle" type="CollisionPolygon2D" parent="."]
+visible = false
+position = Vector2(-1, 5)
+scale = Vector2(1.14784, 1.14784)
+polygon = PackedVector2Array(-3.48481, -7.84082, -4.35601, -4.35601, -6.09842, -2.61361, -6.09842, 3.48481, -4.35601, 6.09842, -4.35601, 7.84082, -2.61361, 7.84082, -1.74241, 7.84082, -1.74241, 6.96962, 0.871203, 6.96962, 0.871203, 7.84082, 1.74241, 7.84082, 3.48481, 7.84082, 3.48481, 5.22722, 5.22722, 5.22722, 6.09842, 3.48481, 5.22722, 2.61361, 5.22722, 0.871203, 6.09842, 0.871203, 6.09842, -7.84082, 5.22722, -8.71203, 4.35601, -7.84082, -5.96046e-08, -7.84082, -0.871203, -7.84082)
+
+[node name="CollisionRun" type="CollisionPolygon2D" parent="."]
+visible = false
+position = Vector2(0, 4)
+scale = Vector2(1.15055, 1.15055)
+polygon = PackedVector2Array(-3.4766, -7.82236, -4.34576, -2.60745, -5.21491, -1.7383, -5.21491, 3.4766, -5.21491, 4.34576, -5.21491, 6.95321, -6.08406, 7.82236, -6.08406, 8.69151, -4.34576, 8.69151, -3.4766, 7.82236, -2.60745, 6.95321, 3.4766, 6.95321, 4.34576, 6.95321, 4.34576, 4.34576, 3.4766, 4.34576, 3.4766, 3.4766, 4.34576, 2.60745, 5.21491, 0, 5.21491, -5.21491, 5.21491, -6.95321, 5.21491, -7.82236, 2.60745, -7.82236, 2.60745, -6.95321, 0, -6.95321, 0, -7.82236)
+
+[node name="CollisionSneak" type="CollisionPolygon2D" parent="."]
+visible = false
+position = Vector2(1, 7)
+scale = Vector2(1.07813, 1.07813)
+polygon = PackedVector2Array(-3.71012, -7.42024, -3.71012, -4.63765, -1.85506, -4.63765, -1.85506, -6.49271, 0.92753, -6.49271, 0.92753, -3.71012, 5.56518, -3.71012, 5.56518, -6.49271, 6.49271, -6.49271, 7.42024, -6.49271, 8.34777, -5.56518, 8.34777, 5.56518, 6.49271, 5.56518, 6.49271, 8.34777, 4.63765, 8.34777, 4.63765, 7.42024, 2.78259, 7.42024, 2.78259, 8.34777, -2.78259, 8.34777, -2.78259, 7.42024, -4.63765, 7.42024, -4.63765, 8.34777, -7.42024, 8.34777, -7.42024, 6.49271, -6.49271, 6.49271, -6.49271, 3.71012, -7.42024, 2.78259, -7.42024, 0.927529, -6.49271, 0.927529, -6.49271, -0.92753, -8.34777, -0.92753, -8.34777, -5.56518, -7.42024, -5.56518, -6.49271, -7.42024)
+
+[node name="CollisionHurt" type="CollisionPolygon2D" parent="."]
+visible = false
+position = Vector2(0, 2)
+scale = Vector2(1.32198, 1.32198)
+polygon = PackedVector2Array(-1.51289, -9.07732, -1.51289, -6.05155, 1.51289, -6.05155, 1.51289, -9.07732, 2.26933, -7.56443, 3.02577, -6.80799, 3.78222, -6.05155, 4.53866, -5.2951, 4.53866, -0.756443, 5.2951, 0, 6.05155, 0, 6.80799, -1.51289, 7.56443, -1.51289, 7.56443, -2.26933, 8.32088, -2.26933, 8.32088, -1.51289, 9.07732, -0.756443, 8.32088, 0, 8.32088, 1.51289, 7.56443, 1.51289, 6.80799, 2.26933, 6.80799, 3.02577, 6.05155, 3.02577, 6.05155, 4.53866, 6.80799, 4.53866, 6.80799, 6.05155, 6.05155, 6.05155, 6.05155, 6.80799, 5.2951, 6.80799, 5.2951, 7.56443, 3.78222, 7.56443, 3.78222, 8.32088, 2.26933, 8.32088, 2.26933, 9.07732, 1.51289, 9.07732, 1.51289, 9.83376, -1.51289, 9.83376, -1.51289, 9.07732, -2.26933, 9.07732, -2.26933, 8.32088, -3.78222, 8.32088, -3.78222, 7.56443, -5.2951, 7.56443, -5.2951, 6.80799, -6.05155, 6.80799, -6.05155, 6.05155, -6.80799, 6.05155, -6.80799, 4.53866, -6.05155, 4.53866, -6.05155, 3.02577, -6.80799, 3.02577, -6.80799, 2.26933, -7.56443, 1.51289, -8.32088, 1.51289, -8.32088, 0, -9.07732, 0, -9.07732, -1.51289, -8.32088, -1.51289, -8.32088, -2.26933, -7.56443, -2.26933, -7.56443, -1.51289, -6.80799, -1.51289, -6.05155, 0, -4.53866, 0, -4.53866, -5.2951, -3.78222, -5.2951, -3.78222, -6.80799, -3.02577, -6.80799, -3.02577, -7.56443, -2.26933, -7.56443)
+
+[node name="CollisionJump" type="CollisionPolygon2D" parent="."]
+visible = false
+position = Vector2(-1, 3)
+scale = Vector2(1.14523, 1.14523)
+polygon = PackedVector2Array(-1.74637, -5.23911, -2.61956, -3.49274, -3.49274, -1.74637, -4.36593, -0.873186, -6.1123, 2.61956, -6.1123, 3.49274, -4.36593, 6.98548, -2.61956, 6.98548, -2.61956, 6.1123, -0.873186, 6.1123, 0, 5.23911, 2.61956, 5.23911, 2.61956, 4.36593, 5.23911, 4.36593, 5.23911, 5.23911, 6.1123, 4.36593, 6.98549, 2.61956, 6.98549, 0, 6.98549, -1.74637, 6.1123, -2.61956, 6.1123, -5.23911)
+
+[node name="CollisionFall" type="CollisionPolygon2D" parent="."]
+visible = false
+position = Vector2(-1, 2)
+scale = Vector2(1.08653, 1.08653)
+polygon = PackedVector2Array(-1.84073, -5.52219, -2.76109, -4.60182, -3.68146, -3.68146, -4.60182, -2.76109, -4.60182, 6.44255, -3.68146, 7.36292, -0.920365, 7.36292, 3.68146, 7.36292, 5.52219, 7.36292, 5.52219, 4.60182, 5.52219, 2.76109, 6.44255, -1.84073, 6.44255, -4.60182, 5.52219, -5.52219)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_ey5r7")
 }
 autoplay = "idle"
+
+[node name="DebugLabel" type="Label" parent="."]
+offset_left = -26.0
+offset_top = -60.0
+offset_right = 151.0
+offset_bottom = 81.0
+scale = Vector2(0.326493, 0.326493)
+theme_override_font_sizes/font_size = 32
+text = "adadadadd
+dadaddadd
+dsdadadad"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SoundPlayer" type="AudioStreamPlayer2D" parent="."]
