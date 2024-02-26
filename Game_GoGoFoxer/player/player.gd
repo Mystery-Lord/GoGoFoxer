@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 class_name Player
 
-const GRAVITY_RANGE: Vector2 = Vector2(800.0, 1200.0)
+const GRAVITY_RANGE: Vector2 = Vector2(1000.0, 1500.0)
 const RUN_SPEED: float = 200
 const SPRINT_SPEED: float = 300
 const SNEAK_SPEED: float = 50
@@ -18,6 +18,7 @@ const JUMP_VELOCITY: float = -240.0
 @onready var collision_run = $CollisionRun
 @onready var collision_jump = $CollisionJump
 @onready var collision_fall = $CollisionFall
+@onready var collision_hurt = $CollisionHurt
 
 
 enum PLAYER_STATE {IDLE, RUN, JUMP, FALL, HURT, SNEAK, SPRINT}
@@ -90,6 +91,7 @@ func disable_collision_shapes(state: PLAYER_STATE) -> void:
 	collision_jump.disabled = true
 	collision_fall.disabled = true
 	collision_sneak.disabled = true
+	collision_hurt.disabled = true
 	
 	match state:
 		PLAYER_STATE.IDLE:
@@ -103,6 +105,8 @@ func disable_collision_shapes(state: PLAYER_STATE) -> void:
 		PLAYER_STATE.FALL:
 			collision_fall.disabled = false
 		PLAYER_STATE.SNEAK:
+			collision_sneak.disabled = false
+		PLAYER_STATE.HURT:
 			collision_sneak.disabled = false
 	
 
@@ -133,9 +137,10 @@ func set_state(new_state: PLAYER_STATE) -> void:
 			animation_player.play("sneak")
 		
 func update_debug_label() -> void:
-		debug_label.text = "floor: %s\n%s\n%.0f, %.0f" % [
+		debug_label.text = "floor: %s\n%s\n%.0f, %.0f\ncollision_disable: %s" % [
 			is_on_floor(),
 			PLAYER_STATE.keys()[player_state],
 			velocity.x,
-			velocity.y
+			velocity.y,
+			collision_idle.disabled,
 		]
