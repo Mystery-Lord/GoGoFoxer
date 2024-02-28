@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 class_name Player
 
-const GRAVITY_RANGE: Vector2 = Vector2(1000.0, 1500.0)
+const GRAVITY_RANGE: Vector2 = Vector2(1000.0, 1400.0)
 const RUN_SPEED: float = 200
 const SPRINT_SPEED: float = 300
 const SNEAK_SPEED: float = 50

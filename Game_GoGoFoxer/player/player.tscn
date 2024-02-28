@@ -157,6 +157,7 @@ hframes = 19
 frame = 13
 
 [node name="CollisionIdle" type="CollisionPolygon2D" parent="."]
+visible = false
 position = Vector2(-1, 6.5)
 scale = Vector2(1.1, 1.1)
 polygon = PackedVector2Array(-2.72727, -8.63636, -3.63636, -4.09091, -6.09842, -2.61361, -6.09842, 3.48481, -3.63636, 5, -0.909091, 7.45455, 0.909091, 7.45455, 3.48481, 5.22722, 5.22722, 5.22722, 6.09842, 3.48481, 5.22722, 2.61361, 6.36364, 0.454545, 6.36364, -4.09091, 5.45455, -8.63636, 3.63636, -5.90909, -0.909091, -5.90909)
@@ -195,6 +196,7 @@ libraries = {
 autoplay = "idle"
 
 [node name="DebugLabel" type="Label" parent="."]
+visible = false
 offset_left = -22.0
 offset_top = -54.0
 offset_right = 155.0

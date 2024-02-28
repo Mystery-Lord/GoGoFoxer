@@ -8,8 +8,8 @@ enum FACING { LEFT = -1, RIGHT = 1 }
 
 @export var default_facing: FACING = FACING.LEFT
 @export var points: int = 1
+@export var speed: float = 30.0
 
-var _speed: float = 60.0
 var _gravity: float = 1000.0
 var _facing: FACING = default_facing
 var _player_ref: Player
@@ -21,7 +21,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
-	pass
+	fallen_off()
 	
 func fallen_off() -> void:
 	if global_position.y > OFF_SCREEN_KILL:
