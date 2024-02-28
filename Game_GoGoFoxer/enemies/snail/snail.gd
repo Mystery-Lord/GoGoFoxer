@@ -4,7 +4,7 @@ extends EnemyBase
 @onready var floor_detection = $FloorDetection
 
 func _ready():
-	pass
+	super._ready()
 	
 
 

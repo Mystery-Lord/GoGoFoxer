@@ -8,6 +8,7 @@ const SPRINT_SPEED: float = 300
 const SNEAK_SPEED: float = 50
 const HURT_TIME: float = 0.3
 const JUMP_VELOCITY: float = -240.0
+const ROCKETJUMP_VELOCITY: float = -340.0
 
 @onready var sprite_2d = $Sprite2D
 @onready var animation_player = $AnimationPlayer
@@ -21,7 +22,7 @@ const JUMP_VELOCITY: float = -240.0
 @onready var collision_hurt = $CollisionHurt
 
 
-enum PLAYER_STATE {IDLE, RUN, JUMP, FALL, HURT, SNEAK, SPRINT}
+enum PLAYER_STATE {IDLE, RUN, JUMP, FALL, HURT, SNEAK, SPRINT, ROCKETJUMP}
 
 var player_state: PLAYER_STATE = PLAYER_STATE.IDLE
 
@@ -40,7 +41,7 @@ func _physics_process(delta):
 	update_debug_label()
 
 func calculate_gravity(delta) -> void:
-	var gravity_factor = clampf(abs(velocity.y) / 1200.0, 0.0, 1.0)
+	var gravity_factor = clampf(abs(velocity.y) / 1400.0, 0.0, 1.0)
 	var realtime_gravity = lerp(GRAVITY_RANGE.x, GRAVITY_RANGE.y, gravity_factor)
 	velocity.y += realtime_gravity * delta
 	
@@ -62,7 +63,10 @@ func calculate_states() -> void:
 		if velocity.y > 0:
 			set_state(PLAYER_STATE.FALL)
 		else:
-			set_state(PLAYER_STATE.JUMP)
+			if Input.is_action_pressed("rocket_jump"):
+				set_state(PLAYER_STATE.ROCKETJUMP)
+			else:
+				set_state(PLAYER_STATE.JUMP)
 	
 func get_action_input() -> void:
 	velocity.x = 0
@@ -76,13 +80,16 @@ func get_action_input() -> void:
 	if Input.is_action_pressed("left"):
 		velocity.x = -player_speed
 		sprite_2d.flip_h = true
-		
 	elif Input.is_action_pressed("right"):
 		velocity.x = player_speed
 		sprite_2d.flip_h = false
 		
 	if Input.is_action_pressed("jump") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
+		SoundManager.play_clip(sound_player, SoundManager.SOUND_JUMP)
+		
+	if Input.is_action_pressed("rocket_jump") and is_on_floor():
+		velocity.y = ROCKETJUMP_VELOCITY
 		SoundManager.play_clip(sound_player, SoundManager.SOUND_JUMP)
 	
 func disable_collision_shapes(state: PLAYER_STATE) -> void:
@@ -106,10 +113,11 @@ func disable_collision_shapes(state: PLAYER_STATE) -> void:
 			collision_fall.disabled = false
 		PLAYER_STATE.SNEAK:
 			collision_sneak.disabled = false
+		PLAYER_STATE.ROCKETJUMP:
+			collision_jump.disabled = false
 		PLAYER_STATE.HURT:
 			collision_sneak.disabled = false
-	
-
+		
 func set_state(new_state: PLAYER_STATE) -> void:
 	if new_state == player_state:
 		return
@@ -135,6 +143,8 @@ func set_state(new_state: PLAYER_STATE) -> void:
 			animation_player.play("sprint")
 		PLAYER_STATE.SNEAK:
 			animation_player.play("sneak")
+		PLAYER_STATE.ROCKETJUMP:
+			animation_player.play("rocket_jump")
 		
 func update_debug_label() -> void:
 		debug_label.text = "floor: %s\n%s\n%.0f, %.0f\ncollision_disable: %s" % [
