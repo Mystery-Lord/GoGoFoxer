@@ -1,7 +1,8 @@
-[gd_scene load_steps=13 format=3 uid="uid://ct46rxy86gnt3"]
+[gd_scene load_steps=14 format=3 uid="uid://ct46rxy86gnt3"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_82nso"]
 [ext_resource type="Texture2D" uid="uid://43svcrouwa77" path="res://assets/player/player.png" id="1_d0pig"]
+[ext_resource type="PackedScene" uid="uid://c4vf8jhlrdreu" path="res://shooter/shooter.tscn" id="3_gdisn"]
 
 [sub_resource type="Animation" id="Animation_k77lg"]
 length = 0.001
@@ -84,6 +85,22 @@ tracks/0/keys = {
 "values": [17]
 }
 
+[sub_resource type="Animation" id="Animation_4iiuf"]
+resource_name = "rocket_jump"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [4, 17]
+}
+
 [sub_resource type="Animation" id="Animation_xr7n5"]
 resource_name = "run"
 length = 0.4
@@ -135,22 +152,6 @@ tracks/0/keys = {
 "values": [1, 3, 4]
 }
 
-[sub_resource type="Animation" id="Animation_4iiuf"]
-resource_name = "rocket_jump"
-length = 0.3
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [4, 17]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ey5r7"]
 _data = {
 "RESET": SubResource("Animation_k77lg"),
@@ -178,7 +179,7 @@ frame = 13
 visible = false
 position = Vector2(-9, 15)
 scale = Vector2(1.89761, 1.6376)
-polygon = PackedVector2Array(1.58094, -12.213, 1.58094, -7.93844, 0, -6.10649, 1.58094, -2.4426, 2.6599, -1.20384, 2.10791, 0, 3.54654, -1.20384, 5.3198, -1.20384, 6.20644, 0, 6.20644, -2.40768, 7.09307, -2.40768, 7.09307, -4.81535, 8.43165, -6.10649, 8.43165, -12.213, 5.26978, -10.9917)
+polygon = PackedVector2Array(1.58094, -12.213, 1.58094, -7.93844, 0, -6.10649, 1.58094, -2.4426, 2.6599, -1.20384, 4.21583, 0, 5.3198, -1.20384, 6.20644, -2.40768, 7.09307, -2.40768, 7.09307, -4.81535, 8.43165, -6.10649, 8.43165, -12.213, 5.26978, -10.9917)
 
 [node name="CollisionRun" type="CollisionPolygon2D" parent="."]
 visible = false
@@ -198,9 +199,8 @@ scale = Vector2(1.2, 1.2)
 polygon = PackedVector2Array(-1.51289, -9.07732, -1.51289, -6.05155, 1.51289, -6.05155, 1.51289, -9.07732, 2.26933, -7.56443, 3.02577, -6.80799, 3.78222, -6.05155, 4.53866, -5.2951, 4.53866, -0.756443, 5.2951, 0, 6.05155, 0, 6.80799, -1.51289, 7.56443, -1.51289, 7.56443, -2.26933, 8.32088, -2.26933, 8.32088, -1.51289, 9.07732, -0.756443, 8.32088, 0, 8.32088, 1.51289, 7.56443, 1.51289, 6.80799, 2.26933, 6.80799, 3.02577, 6.05155, 3.02577, 6.05155, 4.53866, 6.80799, 4.53866, 6.80799, 6.05155, 6.05155, 6.05155, 6.05155, 6.80799, 5.2951, 6.80799, 5.2951, 7.56443, 3.78222, 7.56443, 3.78222, 8.32088, 2.26933, 8.32088, 2.26933, 9.07732, 1.51289, 9.07732, 1.51289, 9.83376, -1.51289, 9.83376, -1.51289, 9.07732, -2.26933, 9.07732, -2.26933, 8.32088, -3.78222, 8.32088, -3.78222, 7.56443, -5.2951, 7.56443, -5.2951, 6.80799, -6.05155, 6.80799, -6.05155, 6.05155, -6.80799, 6.05155, -6.80799, 4.53866, -6.05155, 4.53866, -6.05155, 3.02577, -6.80799, 3.02577, -6.80799, 2.26933, -7.56443, 1.51289, -8.32088, 1.51289, -8.32088, 0, -9.07732, 0, -9.07732, -1.51289, -8.32088, -1.51289, -8.32088, -2.26933, -7.56443, -2.26933, -7.56443, -1.51289, -6.80799, -1.51289, -6.05155, 0, -4.53866, 0, -4.53866, -5.2951, -3.78222, -5.2951, -3.78222, -6.80799, -3.02577, -6.80799, -3.02577, -7.56443, -2.26933, -7.56443)
 
 [node name="CollisionJump" type="CollisionPolygon2D" parent="."]
-visible = false
 position = Vector2(-1, 3)
-polygon = PackedVector2Array(-1.74637, -5.23911, -2.61956, -3.49274, -3.49274, -1.74637, -4.36593, -0.873186, -6.1123, 2.61956, -6.1123, 3.49274, -4.36593, 6.98548, -2.61956, 6.98548, -2.61956, 6.1123, -0.873186, 6.1123, 0, 5.23911, 2.61956, 5.23911, 2.61956, 4.36593, 5.23911, 4.36593, 5.23911, 5.23911, 6.1123, 4.36593, 6.98549, 2.61956, 6.98549, 0, 6.98549, -1.74637, 6.1123, -2.61956, 6.1123, -5.23911)
+polygon = PackedVector2Array(-3, -9, -2.61956, -3.49274, -3.49274, -1.74637, -4.36593, -0.873186, -6.1123, 2.61956, -6, 5, -4.36593, 6.98548, -2.61956, 6.98548, -2.61956, 6.1123, -0.873186, 6.1123, 0, 5.23911, 2.61956, 5.23911, 5.23911, 5.23911, 8, 5, 8, -2, 6.1123, -2.61956, 6, -9, 3.01876, -8, 0.568789, -8)
 
 [node name="CollisionFall" type="CollisionPolygon2D" parent="."]
 visible = false
@@ -230,3 +230,44 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="SoundPlayer" type="AudioStreamPlayer2D" parent="."]
+
+[node name="HitBox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionIdle_H" type="CollisionPolygon2D" parent="HitBox"]
+visible = false
+position = Vector2(-9, 15)
+scale = Vector2(1.89761, 1.6376)
+polygon = PackedVector2Array(1.58094, -12.213, 1.58094, -7.93844, 0, -6.10649, 1.58094, -2.4426, 2.6599, -1.20384, 4.21583, 0, 5.3198, -1.20384, 6.20644, -2.40768, 7.09307, -2.40768, 7.09307, -4.81535, 8.43165, -6.10649, 8.43165, -12.213, 5.26978, -10.9917)
+
+[node name="CollisionRun_H" type="CollisionPolygon2D" parent="HitBox"]
+visible = false
+position = Vector2(-12, 19)
+scale = Vector2(2.25572, 2.06135)
+polygon = PackedVector2Array(3.10322, -3.39583, 4.87649, -1.94047, 6.20644, -3.39583, 7.53639, -4.85118, 7.9797, -7.76189, 7.9797, -11.6428, 5.76312, -10.6726, 3.10322, -11.6428, 3.10322, -8.73213, 1.77327, -6.79166)
+
+[node name="CollisionSneak_H" type="CollisionPolygon2D" parent="HitBox"]
+visible = false
+position = Vector2(1, 6.5)
+polygon = PackedVector2Array(-4, -3.5, -1, -4.5, 1, -3.5, 6, -3.5, 8, -4.5, 8.34777, 5.56518, 6.49271, 5.56518, 6.49271, 8.34777, 4.63765, 8.34777, 4.63765, 7.42024, 2.78259, 7.42024, 2.78259, 8.34777, -2.78259, 8.34777, -2.78259, 7.42024, -4.63765, 7.42024, -4.63765, 8.34777, -7.42024, 8.34777, -6.49271, 6.49271, -6.49271, -0.92753, -8, -1.5, -6, -4.5)
+
+[node name="CollisionJump_H" type="CollisionPolygon2D" parent="HitBox"]
+visible = false
+position = Vector2(-1, 3)
+polygon = PackedVector2Array(-4, -9, -3, -4, -5, -1, -9, 7, -6, 10, -2.61956, 6.98548, 0, 5.23911, 5.23911, 5.23911, 7, 6, 8, 0, 10, -1, 8, -3, 6, -9, 3, -8, 0, -8)
+
+[node name="CollisionFall_H" type="CollisionPolygon2D" parent="HitBox"]
+visible = false
+position = Vector2(-1, 2)
+scale = Vector2(1, 1.2)
+polygon = PackedVector2Array(-1, -9, -2.76109, -4.60182, -8, 0, -3.68146, 7.36292, -1, 6.66667, 2, 6.66667, 7, 8.33333, 6, 3, 7, -2.5, 6, -9, 4, -5.83333, 1, -5.83333)
+
+[node name="Shooter" parent="." instance=ExtResource("3_gdisn")]
+speed = 400.0
+life_span = 10.0
+bullet_type = 1
+shoot_dely = 1.0
+
+[connection signal="area_entered" from="HitBox" to="." method="_on_hit_box_area_entered"]
+[connection signal="area_exited" from="HitBox" to="." method="_on_hit_box_area_exited"]

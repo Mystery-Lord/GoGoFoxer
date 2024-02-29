@@ -8,7 +8,7 @@ const SPRINT_SPEED: float = 300
 const SNEAK_SPEED: float = 50
 const HURT_TIME: float = 0.3
 const JUMP_VELOCITY: float = -240.0
-const ROCKETJUMP_VELOCITY: float = -340.0
+const ROCKETJUMP_VELOCITY: float = -360.0
 
 @onready var sprite_2d = $Sprite2D
 @onready var animation_player = $AnimationPlayer
@@ -20,6 +20,7 @@ const ROCKETJUMP_VELOCITY: float = -340.0
 @onready var collision_jump = $CollisionJump
 @onready var collision_fall = $CollisionFall
 @onready var collision_hurt = $CollisionHurt
+@onready var shooter = $Shooter
 
 
 enum PLAYER_STATE {IDLE, RUN, JUMP, FALL, HURT, SNEAK, SPRINT, ROCKETJUMP}
@@ -39,6 +40,11 @@ func _physics_process(delta):
 	move_and_slide()
 	calculate_states()
 	update_debug_label()
+	
+	if Input.is_action_just_pressed("shoot") == true:
+		shoot()
+		#ObjectMaker.create_bullet(150.0, Vector2.RIGHT, global_position,
+									#20.0, ObjectMaker.BULLET_TYPE.ENEMY)
 
 func calculate_gravity(delta) -> void:
 	var gravity_factor = clampf(abs(velocity.y) / 1400.0, 0.0, 1.0)
@@ -145,6 +151,13 @@ func set_state(new_state: PLAYER_STATE) -> void:
 			animation_player.play("sneak")
 		PLAYER_STATE.ROCKETJUMP:
 			animation_player.play("rocket_jump")
+			
+func shoot() -> void:
+	if sprite_2d.flip_h == true:
+		shooter.shoot_process(Vector2.LEFT)
+	else:
+		shooter.shoot_process(Vector2.RIGHT)
+	
 		
 func update_debug_label() -> void:
 		debug_label.text = "floor: %s\n%s\n%.0f, %.0f\ncollision_disable: %s" % [
@@ -154,3 +167,11 @@ func update_debug_label() -> void:
 			velocity.y,
 			collision_idle.disabled,
 		]
+
+
+func _on_hit_box_area_entered(area):
+	print("player hitbox: ", area)
+
+
+func _on_hit_box_area_exited(area):
+	pass # Replace with function body.

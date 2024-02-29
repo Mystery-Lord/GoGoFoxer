@@ -16,9 +16,10 @@ config/icon="res://icon.png"
 
 [autoload]
 
-SoundManager="*res://singeltons/sound_manager.gd"
 GameManager="*res://singeltons/game_manager.gd"
+ObjectMaker="*res://singeltons/object_maker.gd"
 SignalManager="*res://singeltons/signal_manager.gd"
+SoundManager="*res://singeltons/sound_manager.gd"
 
 [display]
 
@@ -67,6 +68,8 @@ rocket_jump={
 [layer_names]
 
 2d_physics/layer_1="platforms"
+2d_physics/layer_2="player_hitbox"
+2d_physics/layer_3="enemy_hitbox"
 
 [rendering]
 
