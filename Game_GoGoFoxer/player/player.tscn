@@ -232,8 +232,8 @@ vertical_alignment = 1
 [node name="SoundPlayer" type="AudioStreamPlayer2D" parent="."]
 
 [node name="HitBox" type="Area2D" parent="."]
-collision_layer = 0
-collision_mask = 4
+collision_layer = 2
+collision_mask = 20
 
 [node name="CollisionIdle_H" type="CollisionPolygon2D" parent="HitBox"]
 visible = false
@@ -264,10 +264,8 @@ scale = Vector2(1, 1.2)
 polygon = PackedVector2Array(-1, -9, -2.76109, -4.60182, -8, 0, -3.68146, 7.36292, -1, 6.66667, 2, 6.66667, 7, 8.33333, 6, 3, 7, -2.5, 6, -9, 4, -5.83333, 1, -5.83333)
 
 [node name="Shooter" parent="." instance=ExtResource("3_gdisn")]
-speed = 400.0
+speed = 300.0
 life_span = 10.0
-bullet_type = 1
-shoot_dely = 1.0
 
 [connection signal="area_entered" from="HitBox" to="." method="_on_hit_box_area_entered"]
 [connection signal="area_exited" from="HitBox" to="." method="_on_hit_box_area_exited"]

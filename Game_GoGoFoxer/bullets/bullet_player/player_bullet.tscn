@@ -3,7 +3,8 @@
 [ext_resource type="PackedScene" uid="uid://bdhfc41innyy4" path="res://bullets/bullet_base/bullet_base.tscn" id="1_c4h5c"]
 
 [node name="PlayerBullet" instance=ExtResource("1_c4h5c")]
-scale = Vector2(0.4, 0.4)
+collision_layer = 8
+collision_mask = 4
 
-[node name="Sprite2D" parent="." index="0"]
-scale = Vector2(0.4, 0.4)
+[node name="CollisionShape2D" parent="." index="1"]
+scale = Vector2(0.923572, 0.923572)

@@ -2,13 +2,13 @@ extends CharacterBody2D
 
 class_name Player
 
-const GRAVITY_RANGE: Vector2 = Vector2(1000.0, 1400.0)
-const RUN_SPEED: float = 200
-const SPRINT_SPEED: float = 300
+const GRAVITY_RANGE: Vector2 = Vector2(800.0, 1400.0)
+const RUN_SPEED: float = 150
+const SPRINT_SPEED: float = 225
 const SNEAK_SPEED: float = 50
 const HURT_TIME: float = 0.3
-const JUMP_VELOCITY: float = -240.0
-const ROCKETJUMP_VELOCITY: float = -360.0
+const JUMP_VELOCITY: float = -250.0
+const ROCKETJUMP_VELOCITY: float = -375.0
 
 @onready var sprite_2d = $Sprite2D
 @onready var animation_player = $AnimationPlayer
@@ -20,6 +20,11 @@ const ROCKETJUMP_VELOCITY: float = -360.0
 @onready var collision_jump = $CollisionJump
 @onready var collision_fall = $CollisionFall
 @onready var collision_hurt = $CollisionHurt
+@onready var collision_idle_h = $HitBox/CollisionIdle_H
+@onready var collision_run_h = $HitBox/CollisionRun_H
+@onready var collision_sneak_h = $HitBox/CollisionSneak_H
+@onready var collision_jump_h = $HitBox/CollisionJump_H
+@onready var collision_fall_h = $HitBox/CollisionFall_H
 @onready var shooter = $Shooter
 
 
@@ -105,22 +110,34 @@ func disable_collision_shapes(state: PLAYER_STATE) -> void:
 	collision_fall.disabled = true
 	collision_sneak.disabled = true
 	collision_hurt.disabled = true
+	collision_idle_h.disabled = true
+	collision_run_h.disabled = true
+	collision_sneak_h.disabled = true
+	collision_jump_h.disabled = true
+	collision_fall_h.disabled = true
 	
 	match state:
 		PLAYER_STATE.IDLE:
 			collision_idle.disabled = false
+			collision_idle_h.disabled = false
 		PLAYER_STATE.RUN:
 			collision_run.disabled = false
+			collision_run_h.disabled = false
 		PLAYER_STATE.SPRINT:
 			collision_run.disabled = false
+			collision_run_h.disabled = false
 		PLAYER_STATE.JUMP:
 			collision_jump.disabled = false
+			collision_jump_h.disabled = false
 		PLAYER_STATE.FALL:
 			collision_fall.disabled = false
+			collision_fall_h.disabled = false
 		PLAYER_STATE.SNEAK:
 			collision_sneak.disabled = false
+			collision_sneak_h.disabled = false
 		PLAYER_STATE.ROCKETJUMP:
 			collision_jump.disabled = false
+			collision_jump_h.disabled = false
 		PLAYER_STATE.HURT:
 			collision_sneak.disabled = false
 		
@@ -170,8 +187,5 @@ func update_debug_label() -> void:
 
 
 func _on_hit_box_area_entered(area):
-	print("player hitbox: ", area)
+	print("Player hitbox: ", area)
 
-
-func _on_hit_box_area_exited(area):
-	pass # Replace with function body.

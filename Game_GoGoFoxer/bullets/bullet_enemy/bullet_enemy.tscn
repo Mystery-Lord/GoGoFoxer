@@ -4,10 +4,8 @@
 [ext_resource type="Texture2D" uid="uid://prt502q84cct" path="res://assets/items/bullet2.png" id="2_j4nxw"]
 
 [node name="BulletEnemy" instance=ExtResource("1_hk672")]
+collision_layer = 16
+collision_mask = 2
 
 [node name="Sprite2D" parent="." index="0"]
-scale = Vector2(0.4, 0.4)
 texture = ExtResource("2_j4nxw")
-
-[node name="CollisionShape2D" parent="." index="1"]
-visible = false
