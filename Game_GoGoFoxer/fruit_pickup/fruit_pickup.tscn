@@ -1,6 +1,7 @@
-[gd_scene load_steps=75 format=3 uid="uid://cs0grd8017q8e"]
+[gd_scene load_steps=76 format=3 uid="uid://cs0grd8017q8e"]
 
 [ext_resource type="Texture2D" uid="uid://c4bgtp8xuccid" path="res://assets/items/Cherries.png" id="1_6tvg8"]
+[ext_resource type="Script" path="res://fruit_pickup/fruit_pickup.gd" id="1_7pkyo"]
 [ext_resource type="Texture2D" uid="uid://icttlsk2kryw" path="res://assets/items/Bananas.png" id="1_ieqej"]
 [ext_resource type="Texture2D" uid="uid://bdb171rlpiad0" path="res://assets/items/Kiwi.png" id="1_txpk7"]
 [ext_resource type="Texture2D" uid="uid://8hu17jg4a2rx" path="res://assets/items/Melon.png" id="4_v3ejt"]
@@ -507,6 +508,10 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_wikrq"]
 
 [node name="FruitPickup" type="Area2D"]
+scale = Vector2(0.8, 0.8)
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_7pkyo")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_ly1yg")
@@ -516,3 +521,11 @@ animation = &"melon"
 position = Vector2(0, -1)
 scale = Vector2(0.989507, 0.789507)
 shape = SubResource("CircleShape2D_wikrq")
+
+[node name="LifeTimer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+autostart = true
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="timeout" from="LifeTimer" to="." method="_on_life_timer_timeout"]
